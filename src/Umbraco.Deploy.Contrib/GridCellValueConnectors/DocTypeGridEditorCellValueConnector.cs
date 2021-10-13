@@ -241,7 +241,7 @@ namespace Umbraco.Deploy.Contrib.Connectors.GridCellValueConnectors
             gridControl.Value = jtokenObj;
         }
 
-        private JToken GetJTokenValue(object value) => value != null && IsJson(value) ? JToken.Parse(value.ToString()) : null;
+        private static JToken GetJTokenValue(object value) => value != null && IsJson(value) ? JToken.Parse(value.ToString()) : null;
 
         private static bool IsJson(object value) => value != null && value.ToString().DetectIsJson();
 
@@ -251,13 +251,13 @@ namespace Umbraco.Deploy.Contrib.Connectors.GridCellValueConnectors
             //for picker like content/media either single or multi, it comes with udi values
             value.ToString().Contains("umb://");
 
-        private bool IsText(string editorAlias) =>
+        private static bool IsText(string editorAlias) =>
             //if it's either RTE / Textstring data type
             IsRichtext(editorAlias) || IsTextstring(editorAlias);
 
-        private bool IsRichtext(string editorAlias) => editorAlias.InvariantEquals("Umbraco.TinyMCE");
+        private static bool IsRichtext(string editorAlias) => editorAlias.InvariantEquals("Umbraco.TinyMCE");
 
-        private bool IsTextstring(string editorAlias) => editorAlias.InvariantEquals("Umbraco.TextBox");
+        private static bool IsTextstring(string editorAlias) => editorAlias.InvariantEquals("Umbraco.TextBox");
 
         private string CleanValue(string editorAlias, object value) =>
             //can't tell why textstring have got a weird character 's' in front coming from deploy? so removing first char if that's the case
